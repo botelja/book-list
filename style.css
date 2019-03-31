@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    margin: 5rem auto;
+    padding-top: 0.8rem;
+    width: 600px;
+    height: 100vh;
+    background:#eee;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 2rem;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.success {
+    background-color: #569745;
+    border-color: #aed4a5;
+    color: #aed4a5;
+}
+
+.error {
+    background-color: #b94a48;
+    border-color: #e0b1b8;
+    color: #e0b1b8;
+}
+
+.form-group {
+    padding: 10px 10px 10px 20px;
+}
+
+.form-input {
+    padding: 5px;
+    min-width: 50%;
+    height: 30px;
+    border-radius: 4px;
+    border: none;
+}
+
+label {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    display: block;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-shadow: 0px 2px 1px rgba(0,0,0,0.2);
+}
+
+.btn {
+  display: block;
+  margin: 20px auto 0;
+  width: 50%;
+  height: 40px;
+  border-radius: 25px;
+  border: none;
+  color: #eee;
+  font-weight: 700;
+  box-shadow: 1px 4px 10px 1px #aaa;
+  background: linear-gradient(to right, #207cca 0%,#9f58a3 100%);
+}
+
+table {
+    border-collapse: separate;
+    background:#fff;
+    @include border-radius(5px);
+    margin:50px auto;
+    @include box-shadow(0px 0px 5px rgba(0,0,0,0.3));
+  }
+  
+  thead {
+    @include border-radius(5px);
+  }
+  
+  thead th {
+    font-size:16px;
+    font-weight:400;
+    @include text-shadow(1px 1px 0px rgba(0,0,0,0.5));
+    text-align:left;
+    padding:20px;
+    @include background-image(linear-gradient(#646f7f, #4a5564));
+    
+    &:first-child {
+     @include border-top-left-radius(5px); 
+    }
+  
+    &:last-child {
+      @include border-top-right-radius(5px); 
+    }
+  }
+  
+  tbody tr td {
+    font-weight:400;
+    color:#5f6062;
+    font-size:13px;
+    padding:20px 20px 20px 20px;
+    border-bottom:1px solid #e0e0e0;
+    
+  }
+  
+  tbody tr:nth-child(2n) {
+    background:#f0f3f5;
+  }
+  
+  tbody tr:last-child td {
+    border-bottom:none;
+    &:first-child {
+      @include border-bottom-left-radius(5px);
+    }
+    &:last-child {
+      @include border-bottom-right-radius(5px);
+    }
+  }
+  
+  tbody:hover > tr td {
+    @include opacity(0.5);
+    
+    /* uncomment for blur effect */
+    /* color:transparent;
+    @include text-shadow(0px 0px 2px rgba(0,0,0,0.8));*/
+  }
+  
+  tbody:hover > tr:hover td {
+    @include text-shadow(none);
+    color:#2d2d2d;
+    @include opacity(1.0);
+  }

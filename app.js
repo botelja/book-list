@@ -12,6 +12,63 @@ function UI() {
 
 }
 
+//LocalStorage Constructor 
+function Store() {
+
+    //Get books from localstorage
+    this.getBooks = function() {
+
+        let books;
+
+        if(localStorage.getItem('books') === null) {
+            books = [];
+        } else {
+            books = JSON.parse(localStorage.getItem('books'));
+        }
+
+        return books;
+    }
+
+    //Display book to UI
+    this.displayBooks = function() {
+
+        const books = this.getBooks();
+
+        books.forEach(function(book) {
+            
+            const ui = new UI();
+
+            ui.addBookToList(book);
+        });
+    }
+
+    //Add book to localstorage
+    this.addBook = function(book) {
+
+        const books = this.getBooks();
+
+        books.push(book);
+
+        localStorage.setItem('books', JSON.stringify(books));
+    }
+
+    //Delete book from localstorage
+    this.removeBook = function(isbn) {
+        
+        const books = this.getBooks();
+
+        books.forEach(function(book, index) {
+            if(book.isbn === isbn) {
+                books.splice(index, 1);
+            }
+        });
+        
+        localStorage.setItem('books', JSON.stringify(books));
+
+    }
+
+}
+
 //Add book to the list
 UI.prototype.addBookToList = function(book) {
 
@@ -59,6 +116,15 @@ UI.prototype.showAlert = function(message, className) {
     }, 3000);
 }
 
+//Delete book
+UI.prototype.deleteBook = function(target) {
+    
+    if(target.classList.contains('fa-trash-alt')) {
+        target.parentElement.parentElement.parentElement.remove();
+    }
+
+}
+
 //Clear fields
 UI.prototype.clearFields = function() {
 
@@ -67,7 +133,15 @@ UI.prototype.clearFields = function() {
     document.querySelector('#isbn').value = '';
 }
 
-//Event Listeners
+//DOM Load Event
+document.addEventListener('DOMContentLoaded', function() {
+    //Instantiate localstorage
+    const ls = new Store();
+
+    ls.displayBooks();
+});
+
+//Event Listeners for add book
 document.querySelector('#book-form').addEventListener('submit', function(event) {
     
     //Get form values
@@ -81,6 +155,9 @@ document.querySelector('#book-form').addEventListener('submit', function(event) 
     //Instantiate UI
     const ui = new UI();
 
+    //Instantiate Local Storage
+    const ls = new Store();
+
     //Validate
     if(title === '' || author === '' || isbn === '') {
         
@@ -92,6 +169,9 @@ document.querySelector('#book-form').addEventListener('submit', function(event) 
         //Add book to list
         ui.addBookToList(book);
 
+        //Add book to Local Storage
+        ls.addBook(book);
+
         //Show success
         ui.showAlert('Book added!', 'success');
 
@@ -101,4 +181,25 @@ document.querySelector('#book-form').addEventListener('submit', function(event) 
 
    
     event.preventDefault();
+});
+
+//Event Listener for delete
+document.querySelector('#book-list').addEventListener('click', function(e) {
+
+    //Instantiate UI
+    const ui = new UI();
+
+    //Instantiate localstorage
+    const ls = new Store();
+
+    //Delete book
+    ui.deleteBook(e.target);
+
+    //Delete book from localstorage
+    ls.removeBook(e.target.parentElement.parentElement.previousElementSibling.textContent);
+
+    //Show message
+    ui.showAlert('Book removed!', 'success');
+
+    e.preventDefault();
 });
